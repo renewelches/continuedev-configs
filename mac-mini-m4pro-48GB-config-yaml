@@ -1,0 +1,42 @@
+name: Local Assistant
+version: 1.0.0
+schema: v1
+models:
+  - name: Codestral
+    provider: mistral
+    model: codestral-latest
+    apiKey: ${{ inputs.MISTRAL_API_KEY }}
+    roles:
+      - autocomplete
+      - chat
+      - edit
+      - apply
+    defaultCompletionOptions:
+      contextLength: 256000
+  - name: gpt-oss 20b
+    provider: ollama
+    model: gpt-oss:20b
+    roles:
+      - apply
+      - chat
+      - edit
+    capabilities:
+      - tool_use   
+  - name: Fast Apply 1.5B v1.0
+    provider: ollama
+    apiBase: http://192.168.1.158:11434
+    model: hf.co/bartowski/FastApply-1.5B-v1.0-GGUF:latest
+    roles:
+      - apply
+    defaultCompletionOptions:
+      contextLength: 32768 
+  - name: nomic-embed-text latest
+    provider: ollama
+    model: nomic-embed-text:latest
+    roles:
+      - embed
+  - name: Qwen3-Reranker-4B latest
+    provider: ollama
+    model: hf.co/QuantFactory/Qwen3-Reranker-4B-GGUF:latest
+    roles:
+      - rerank
